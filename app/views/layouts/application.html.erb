@@ -6,11 +6,119 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/3f7cef84ca.js" crossorigin="anonymous"></script>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <header class="shadow-sm">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container sticky-top">
+          <a class="navbar-brand p-3" href="/"><%= image_tag('nagano_cake_logo.jpg', size: '90x90') %></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+            <% if admin_signed_in? %>
+              <% if request.fullpath.include? "/admin" %>
+              <% else %>
+              <% end %>
+              <li class="nav-item">
+                <%= link_to "商品一覧", admin_items_path, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "会員一覧", admin_customers_path, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "注文履歴一覧", admin_root_path, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "ジャンル一覧", admin_genres_path, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= form_with url: admin_items_path, method: :get do |f| %>
+                  <%= f.text_field :search, placeholder:"Search" %>
+                  <%= button_tag type: "submit", class: "btn btn-default" do %>
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  <% end %>
+                <% end %>
+              </li>
+            <% elsif customer_signed_in? %>
+              <p>ようこそ、<%= current_customer.last_name %>さん！</p>
+              <li class="nav-item">
+                <%= link_to "マイページ", my_page_path, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "商品一覧", items_path, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "カート", cart_items_path, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= form_with url: items_path, method: :get do |f| %>
+                  <%= f.text_field :search, placeholder:"Search" %>
+                  <%= button_tag type: "submit", class: "btn btn-default" do %>
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  <% end %>
+                <% end %>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to "About", about_path, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "商品一覧", items_path, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "新規登録", new_customer_registration_path, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "ログイン", new_customer_session_path, class: 'nav-link text-dark' %>
+              </li>
+              <li class="nav-item">
+                <%= form_with url: items_path, method: :get do |f| %>
+                  <%= f.text_field :search, placeholder:"Search" %>
+                  <%= button_tag type: "submit", class: "btn btn-default" do %>
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  <% end %>
+                <% end %>
+              </li>
+            <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
     <%= yield %>
+    <footer class="bg-light shadow-sm text-secondary mt-5 pt-5 pb-4">
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <p>NaganoCake</p>
+            <%= image_tag('nagano_cake_logo.jpg', size: '50x50') %>
+          </div>
+          <div class="col-md-8">
+            <h6 class="text-secondary mt-2 mb-3">Link</h6>
+            <ul class="p-0 list-unstyled">
+              <li>
+                <a href="" title="About" class="text-secondary">会社概要</a>
+              </li>
+              <li>
+                <a href="" title="License informations" class="text-secondary">プライバシーポリシー</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
