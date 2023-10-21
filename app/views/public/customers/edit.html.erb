@@ -1,2 +1,52 @@
-<h1>Public::Customers#edit</h1>
-<p>Find me in app/views/public/customers/edit.html.erb</p>
+<div class="container">
+  <div class="row mt-3">
+    <h2>会員情報編集</h2>
+  </div>
+  <div class="row mt-3">
+    <%= form_with model: @customer, url:my_page_update_path, method: :patch do |f| %>
+      <table class="table table-borderless">
+        <tr>
+          <td><label for="inputLastName">氏名</label></td>
+          <td>
+            <%= f.text_field :last_name, autofocus: true, id:"inputLastName", placeholder:"多古"%>
+            <label for="inputFirstName"></label>
+            <%= f.text_field :first_name, id:"inputFirstName", placeholder:"蛸"%>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="inputLastNameKana">フリガナ</label></td>
+          <td>
+            <%= f.text_field :last_name_kana, id:"inputLastNameKana", placeholder:"タコ"%>
+            <label for="inputFirstNameKana"></label>
+            <%= f.text_field :first_name_kana, id:"inputFirstNameKana", placeholder:"タコ"%>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="inputPostalCode">郵便番号</label></td>
+          <td><%= f.text_field :postal_code, id:"inputPostalCode", placeholder:"0000000"%></td>
+        </tr>
+        <tr>
+          <td><label for="inputAddress">住所</label></td>
+          <td><%= f.text_field :address, id:"inputAddress", placeholder:"東京"%></td>
+        </tr>
+        <tr>
+          <td><label for="inputTelephoneNumber">電話番号</label></td>
+          <td><%= f.text_field :telephone_number, id:"inputTelephoneNumber", placeholder:"01201230123"%></td>
+        </tr>
+        <tr>
+          <td><label for="inputEmail">メールアドレス</label></td>
+          <td><%= f.text_field :email, id:"inputEmail", placeholder:"taco@taco.com"%></td>
+        </tr>
+      </table>
+      <div class="row mt-5">
+        <div class="col-lg-4">
+          <%= f.submit "編集内容を保存", class: "btn btn-success" %>
+        </div>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+          <%= link_to "退会する", customers_confirm_path, class: "btn btn-danger" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
