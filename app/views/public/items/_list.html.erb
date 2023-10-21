@@ -1,0 +1,12 @@
+<table class="table table-hover table-borderless">
+  <thead class="table-active">
+    <th>ジャンル検索</th>
+  </thead>
+  <% genres.each do |genre| %>
+  <tbody>
+    <tr>
+      <td><%= link_to genre.name, items_path(genre_name: genre.name), class: "text-secondary" %></td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>
