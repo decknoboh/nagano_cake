@@ -1,2 +1,56 @@
-<h1>Admin::Items#new</h1>
-<p>Find me in app/views/admin/items/new.html.erb</p>
+<div class="container">
+  <div class="row mt-3">
+    <h2>商品新規登録</h2>
+  </div>
+  <% if @item.errors.any? %>
+  <div class="row mt-3">
+    <h5><%= @item.errors.count %>件のエラーが発生しました</h5>
+    <ul>
+      <% @item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+  <div class="row mt-3">
+    <div class="col-lg-10">
+      <%= form_with model: @item, url: admin_items_path do |f| %>
+        <table class="table table-borderless">
+          <tr>
+            <td><label for="inputImage"><strong>商品画像</strong></label></td>
+            <td><%= f.file_field :image, id:"inputImage", accept: "image/*" %></td>
+          </tr>
+          <tr>
+            <td><label for="inputItemName"><strong>商品名</strong></label></td>
+            <td><%= f.text_field :name, id:"inputItemName" %></td>
+          </tr>
+          <tr>
+            <td><label for="inputIntroduction"><strong>商品説明</strong></label></td>
+            <td><%= f.text_area :introduction, id:"inputIntroduction" %></td>
+          </tr>
+          <tr>
+            <td><label><strong>ジャンル</strong></label></td>
+            <td><%= f.select :genre_id, options_from_collection_for_select(Genre.all, :id, :name) %></td>
+          </tr>
+          <tr>
+            <td><label for "inputPrice"><strong>税抜価格</strong></label></td>
+            <td><%= f.text_field :price, id:"inputPrice" %></td>
+          </tr>
+          <tr>
+            <td><label><strong>販売ステータス</strong></label></td>
+            <td>
+              <%= f.radio_button :is_active, true %>
+              <strong><%= f.label :is_active_true, "販売中" %></strong>
+              <%= f.radio_button :is_active, false %>
+              <strong><%= f.label :is_active_false, "販売停止中" %></strong>
+            </td>
+          </tr>
+        </table>
+        <div class="row col-sm-3 mt-3 mx-auto">
+          <%= f.submit "新規登録", class: "btn btn-lg btn-success" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+</div>

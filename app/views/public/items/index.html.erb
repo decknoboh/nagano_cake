@@ -1,2 +1,30 @@
-<h1>Public::Items#index</h1>
-<p>Find me in app/views/public/items/index.html.erb</p>
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-lg-2">
+      <%= render 'list', genres: @genres %>
+    </div>
+    <div class="col-lg-10 mt-3">
+      <div class="row mt-3">
+        <h2><%= @genre_name %>一覧(全<%= @items.count %>件)</h2>
+      </div>
+      <div class="row mt-3 mx-auto">
+        <% @items.each do |item| %>
+        <div class="col-lg-3">
+          <%= link_to item_path(item.id) do %>
+            <%= image_tag item.get_image(200,100) %>
+          <% end %>
+          <p><%= item.name %></p>
+          <p>¥<%= item.with_tax_price.to_s(:delimited) %></p>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-lg-5"></div>
+    <div class="col-lg-4 ml-5">
+      <%= paginate @items %>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+</div>
